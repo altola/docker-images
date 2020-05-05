@@ -21,7 +21,7 @@ param(
     [Parameter()]
     [ValidateSet("9.3.0", "9.2.0", "9.1.1", "9.0.2")]
     [string[]]$SitecoreVersion = @("9.3.0"),
-    [ValidateSet("xm", "xp", "xc")]
+    [ValidateSet("xm", "xp")]
     [string[]]$Topology = @("xm", "xp"),
     [ValidateSet("1909", "1903", "ltsc2019", "linux")]
     [string[]]$OSVersion = @("ltsc2019"),
@@ -117,7 +117,6 @@ $xcMiscTags = $availableTags | Where-Object { $_ -like "sitecore-certificates:*"
 $assetTags = $availableTags | Where-Object { $_ -like "sitecore-assets:*" }
 $xmTags = $availableTags | Where-Object { $_ -match "sitecore-xm-(?!sxa|spe|jss).*:.*" }
 $xpTags = $availableTags | Where-Object { $_ -match "sitecore-xp-(?!sxa|spe|jss).*:.*" }
-$xcTags = $availableTags | Where-Object { $_ -match "sitecore-xc-(?!sxa|spe|jss).*:.*" }
 
 $xmSpeTags = $availableTags | Where-Object { $_ -match "sitecore-xm-(spe).*:.*" }
 $xmSxaTags = $availableTags | Where-Object { $_ -match "sitecore-xm-(sxa).*:.*" }
@@ -127,10 +126,7 @@ $xpSpeTags = $availableTags | Where-Object { $_ -match "sitecore-xp-(spe).*:.*" 
 $xpSxaTags = $availableTags | Where-Object { $_ -match "sitecore-xp-(sxa).*:.*" }
 $xpJssTags = $availableTags | Where-Object { $_ -match "sitecore-xp-(jss).*:.*" }
 
-$xcSpeTags = $availableTags | Where-Object { $_ -match "sitecore-xc-(spe).*:.*" }
-$xcSxaTags = $availableTags | Where-Object { $_ -match "sitecore-xc-(sxa).*:.*" }
-
-$knownTags = $defaultTags + $xpMiscTags + $xcMiscTags + $assetTags + $xmTags + $xpTags + $xcTags + $xmSpeTags + $xpSpeTags + $xcSpeTags + $xmSxaTags + $xpSxaTags + $xcSxaTags + $xmJssTags + $xpJssTags
+$knownTags = $defaultTags + $xpMiscTags + $xcMiscTags + $assetTags + $xmTags + $xpTags + $xmSpeTags + $xpSpeTags + $xmSxaTags + $xpSxaTags + $xmJssTags + $xpJssTags
 # These tags are not yet classified and no dependency check is made at this point to know which image it belongs to.
 $catchAllTags = [System.Linq.Enumerable]::Except([string[]]$availableTags, [string[]]$knownTags)
 
@@ -141,11 +137,6 @@ foreach ($wv in $OSVersion)
     if ($Topology -contains "xp")
     {
         $xpMiscTags | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
-    }
-
-    if ($Topology -contains "xc")
-    {
-        $xcMiscTags | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
     }
 
     foreach ($scv in $SitecoreVersion)
@@ -171,11 +162,6 @@ foreach ($wv in $OSVersion)
             }
         }
 
-        if ($Topology -contains "xc")
-        {
-            $xcTags | SitecoreFilter -Version $scv | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
-        }
-
         if ($IncludeSpe)
         {
             if ($Topology -contains "xm")
@@ -190,11 +176,6 @@ foreach ($wv in $OSVersion)
                 if ($wv -eq "linux") {
                     $xpSpeTags | SitecoreFilter -Version $scv | LinuxFilter | ForEach-Object { $tags.Add($_) > $null }
                 }
-            }
-
-            if ($Topology -contains "xc")
-            {
-                $xcSpeTags | SitecoreFilter -Version $scv | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
             }
         }
 
@@ -213,11 +194,6 @@ foreach ($wv in $OSVersion)
                 {
                     $xpSxaTags | SitecoreFilter -Version $scv | LinuxFilter | ForEach-Object { $tags.Add($_) > $null }
                 }
-            }
-
-            if ($Topology -contains "xc")
-            {
-                $xcSxaTags | SitecoreFilter -Version $scv | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
             }
         }
 

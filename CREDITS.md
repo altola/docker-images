@@ -14,8 +14,6 @@ https://github.com/pbering/solrwin
 **Bart Plasmeijer**: He is a major contributor the variant images (SXA, JSS etc) also active in the #Docker Slack channel.
 
 **Joost Meijles (Aviva Solutions)**: His contributions in GitHub have been a source of inspiration. He is also active in community discussions about using Docker with Sitecore.
-https://github.com/avivasolutionsnl/sitecore-commerce-docker
-https://github.com/joostmeijles/sitecore-commerce-docker
 https://github.com/avivasolutionsnl/sitecore-docker
 https://github.com/sitecoreops/sitecore-images
 
@@ -25,11 +23,7 @@ https://github.com/sitecore/docker-images
 https://github.com/Sitecore/docker-demo
 
 **Jonne Kats**: His contributions in GitHub have been a source of inspiration.
-https://github.com/avivasolutionsnl/sitecore-commerce-docker
 https://github.com/avivasolutionsnl/sitecore-docker
-
-**Richard Brisley**: His repository was very useful to create the first XPSingle version.
-https://bitbucket.org/sagittarius_rbrisley/sitecore-commerce-docker-xp0.git
 
 **Mikkel Valentin Sørensen**: He contributed to the repository that was used as seed of the current Sitecore/docker-images repository.
 https://github.com/sitecoreops/sitecore-images
