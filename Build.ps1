@@ -37,7 +37,9 @@ param(
     [switch]$IncludeExperimental,
     [Parameter(Mandatory = $false)]
     [ValidateSet("ForceHyperV", "EngineDefault", "ForceProcess", "ForceDefault")]
-    [string]$IsolationModeBehaviour = "ForceHyperV"
+    [string]$IsolationModeBehaviour = "ForceHyperV",
+    [Parameter(Mandatory = $false)]
+    [string]$Network = "Default Switch"
 )
 
 function Write-Message
@@ -280,4 +282,5 @@ SitecoreImageBuilder\Invoke-Build `
     -Tags $tags `
     -ExperimentalTagBehavior:(@{$true = "Include"; $false = "Skip" }[$IncludeExperimental -eq $true]) `
     -IsolationModeBehaviour $IsolationModeBehaviour `
+    -Network $Network `
     -WhatIf:$WhatIfPreference

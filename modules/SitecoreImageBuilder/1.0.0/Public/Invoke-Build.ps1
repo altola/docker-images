@@ -60,6 +60,9 @@ function Invoke-Build
         [Parameter(Mandatory = $false)]
         [ValidateSet("ForceHyperV", "EngineDefault", "ForceProcess", "ForceDefault")]
         [string]$IsolationModeBehaviour = "ForceHyperV"
+        ,
+        [Parameter(Mandatory = $false)]
+        [string]$Network = "Default Switch"
     )
 
     # Setup
@@ -223,11 +226,11 @@ function Invoke-Build
                 $buildOptions.Add($option)
             }
 
-            # Workaround for docker "curl: (6) Could not resolve host: go.microsoft.com"
-            # manually define Hyper-V virtual switch even though it is meant to be default
-            $buildOptions.Add("--network='Default Switch'");
-
             $buildOptions.Add("--tag '$tag'")
+
+            if ([string]::IsNullOrWhiteSpace($network)) {
+                $buildOptions.Add("--network='$network'");
+            }
 
             $buildCommand = "docker image build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
 
