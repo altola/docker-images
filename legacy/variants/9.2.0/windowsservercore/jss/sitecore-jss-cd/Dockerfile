@@ -12,7 +12,7 @@ COPY . /install/
 # Prepare WDP package
 RUN $env:INSTALL_TEMP = 'C:\\install'; `
     Rename-Item -Path (Resolve-Path (Join-Path 'C:\\install' $env:WDP_GLOB)).Path -NewName 'jss.zip' -Verbose; `
-    Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/v5.0.2/nuget.exe' -UseBasicParsing -OutFile (Join-Path $env:INSTALL_TEMP '\\nuget.exe'); `
+    Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/v5.2.0/nuget.exe' -UseBasicParsing -OutFile (Join-Path $env:INSTALL_TEMP '\\nuget.exe'); `
     & (Join-Path $env:INSTALL_TEMP '\\nuget.exe') install 'Microsoft.Web.Xdt' -Version '3.0.0' -OutputDirectory $env:INSTALL_TEMP;
 
 FROM $BASE_IMAGE
@@ -30,4 +30,4 @@ RUN $env:SITENAME = 'sc'; `
     Expand-Archive -Path (Join-Path $env:INSTALL_TEMP '\\JSS-sccpl.zip') -DestinationPath (Join-Path $env:INSTALL_TEMP '\\JSS-sccpl'); `
     Copy-Item -Path (Join-Path $env:INSTALL_TEMP "\\Microsoft.Web.Xdt.*\\lib\\net40\\Microsoft.Web.XmlTransform.dll") -Destination $env:XDTDLL_PATH; `
     & (Join-Path $env:INSTALL_TEMP "\\Invoke-XdtTransform.ps1") -Path $env:WEBCONFIG_PATH -XdtPath (Join-Path $env:INSTALL_TEMP '\\JSS-sccpl\\Xdts\\Web.config.xdt') -XdtDllPath $env:XDTDLL_PATH; `
-    Remove-Item -Path $env:INSTALL_TEMP -Force -Recurse; 
+    Remove-Item -Path $env:INSTALL_TEMP -Force -Recurse;

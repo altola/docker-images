@@ -13,7 +13,7 @@ RUN $env:SIF_PACKAGE_SXA = 'Sitecore Experience Accelerator * CD.scwdp.zip'; `
     $env:SITENAME = 'sc'; `
     $env:INSTALL_TEMP = 'C:\\install'; `
     Rename-Item -Path (Resolve-Path (Join-Path $env:INSTALL_TEMP $env:SIF_PACKAGE_SXA)).Path -NewName 'sxa.zip'; `
-    Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/v5.0.2/nuget.exe' -UseBasicParsing -OutFile (Join-Path $env:INSTALL_TEMP '\\nuget.exe'); `
+    Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/v5.2.0/nuget.exe' -UseBasicParsing -OutFile (Join-Path $env:INSTALL_TEMP '\\nuget.exe'); `
     & (Join-Path $env:INSTALL_TEMP '\\nuget.exe') install 'Microsoft.Web.Xdt' -Version '3.0.0' -OutputDirectory $env:INSTALL_TEMP;
 
 # Runtime
