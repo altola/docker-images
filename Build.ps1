@@ -12,6 +12,9 @@ param(
     [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [string]$SitecorePassword,
+    [Parameter(Mandatory = $true)]
+    [ValidateSet("WhenChanged", "Always", "Never")]
+    [string]$PushMode,
     [Parameter()]
     [string]$Registry = "",
     [Parameter()]
@@ -256,4 +259,5 @@ SitecoreImageBuilder\Invoke-Build `
     -Tags $tags `
     -ExperimentalTagBehavior:(@{$true = "Include"; $false = "Skip" }[$IncludeExperimental -eq $true]) `
     -IsolationModeBehaviour $IsolationModeBehaviour `
+    -PushMode $PushMode
     -WhatIf:$WhatIfPreference
