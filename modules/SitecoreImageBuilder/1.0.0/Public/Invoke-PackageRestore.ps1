@@ -58,37 +58,6 @@ function Invoke-PackageRestore
         New-Item $destinationPath -ItemType Directory -WhatIf:$false | Out-Null
     }
 
-    if ($AzureBlobStorageCacheAccountName -or $AzureBlobStorageCacheContainerName -or $AzureBlobStorageCacheAccountKey) {
-        if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountName)) {
-            Write-Error "AzureBlobStorageCacheAccountName is not specified"
-            exit -1;
-        }
-
-        if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheContainerName)) {
-            Write-Error "AzureBlobStorageCacheContainerName is not specified"
-            exit -1;
-        }
-
-        if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountKey)) {
-            Write-Error "AzureBlobStorageCacheAccountKey is not specified"
-            exit -1;
-        }
-
-        Push-Location $Destination
-        try {
-            Write-Host "Syncing folder with azure blob storage before we start downloading anything, folder: $Destination"
-            Write-Host "npx sync-azure-blob@0.0.12 --container `"$AzureBlobStorageCacheContainerName`" --account-name `"$AzureBlobStorageCacheAccountName`" --account-key `"$AzureBlobStorageCacheAccountKey`""
-            npx sync-azure-blob@0.0.12 --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
-        }
-        catch {
-            Write-Information "Uploading to azure blob thrown the exception. $($_ | ConvertTo-Json)"
-            $LASTEXITCODE = 0;
-        }
-        finally {
-            Pop-Location
-        }
-    }
-
     $sitecoreDownloadSession = $null
 
     # Find out which files is needed
@@ -175,39 +144,6 @@ function Invoke-PackageRestore
 
                     $downloadedAtLeastOneFile = $true;
                 }
-            }
-        }
-    }
-
-    if ($downloadedAtLeastOneFile) {
-        if ($AzureBlobStorageCacheAccountName -or $AzureBlobStorageCacheContainerName -or $AzureBlobStorageCacheAccountKey) {
-            if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountName)) {
-                Write-Error "AzureBlobStorageCacheAccountName is not specified"
-                exit -1;
-            }
-
-            if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheContainerName)) {
-                Write-Error "AzureBlobStorageCacheContainerName is not specified"
-                exit -1;
-            }
-
-            if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountKey)) {
-                Write-Error "AzureBlobStorageCacheAccountKey is not specified"
-                exit -1;
-            }
-
-            Push-Location $Destination
-            try {
-                Write-Host "Syncing folder with azure blob storage after extra files were downloaded, folder: $Destination"
-                Write-Host "npx copy-azure-blob@0.0.12 --container `"$AzureBlobStorageCacheContainerName`" --account-name `"$AzureBlobStorageCacheAccountName`" --account-key `"$AzureBlobStorageCacheAccountKey`""
-                npx upload-azure-blob@0.0.12 --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
-            }
-            catch {
-                Write-Information "Uploading to azure blob thrown the exception. $($_ | ConvertTo-Json)"
-                $LASTEXITCODE = 0;
-            }
-            finally {
-                Pop-Location
             }
         }
     }
