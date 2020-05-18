@@ -209,6 +209,9 @@ SitecoreImageBuilder\Invoke-PackageRestore `
     -SitecoreUsername $SitecoreUsername `
     -SitecorePassword $SitecorePassword `
     -Tags $tags `
+    -AzureBlobStorageCacheAccountName $(AzureBlobStorageCacheAccountName) `
+    -AzureBlobStorageCacheAccountKey $(AzureBlobStorageCacheAccountKey) `
+    -AzureBlobStorageCacheContainerName $(AzureBlobStorageCacheContainerName) `
     -ExperimentalTagBehavior:(@{$true = "Include"; $false = "Skip" }[$IncludeExperimental -eq $true]) `
     -WhatIf:$WhatIfPreference
 

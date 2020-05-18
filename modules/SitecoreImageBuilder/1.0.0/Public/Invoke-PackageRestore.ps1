@@ -49,7 +49,7 @@ function Invoke-PackageRestore
     $sitecoreDownloadUrl = "https://dev.sitecore.net"
     $destinationPath = $Destination.TrimEnd('\')
 
-    if ($AzureBlobStorageCacheAccountName -or $AzureBlobStorageCacheContainerName) {
+    if ($AzureBlobStorageCacheAccountName -or $AzureBlobStorageCacheContainerName -or $AzureBlobStorageCacheAccountKey) {
         if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountName)) {
             Write-Error "AzureBlobStorageCacheAccountName is not specified"
             exit -1;
