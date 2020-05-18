@@ -67,6 +67,7 @@ function Invoke-PackageRestore
 
         Push-Location $Destination
         try {
+            Write-Host "npx sync-azure-blob --container `"$AzureBlobStorageCacheContainerName`" --account-name `"$AzureBlobStorageCacheAccountName`" --account-key `"$AzureBlobStorageCacheAccountKey`""
             npx sync-azure-blob --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
         }
         finally {
