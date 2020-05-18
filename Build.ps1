@@ -19,6 +19,12 @@ param(
     [Parameter()]
     [string]$RegistryPassword = "",
     [Parameter()]
+    [string]$AzureBlobStorageCacheAccountName = "",
+    [Parameter()]
+    [string]$AzureBlobStorageCacheAccountKey = "",
+    [Parameter()]
+    [string]$AzureBlobStorageCacheContainerName = "",
+    [Parameter()]
     [ValidateSet("9.3.0", "9.2.0", "9.1.1", "9.0.2")]
     [string[]]$SitecoreVersion = @("9.3.0"),
     [ValidateSet("xm", "xp")]
@@ -34,6 +40,9 @@ param(
     [Parameter()]
     [switch]$IncludeExperimental
 )
+
+Write-Host "Azure CLI info:"
+az --version
 
 function Write-Message
 {

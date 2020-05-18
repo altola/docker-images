@@ -29,6 +29,15 @@ function Invoke-PackageRestore
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$SitecorePassword
+        ,
+        [Parameter(Mandatory = $true)]
+        [string]$AzureBlobStorageCacheAccountName
+        ,
+        [Parameter(Mandatory = $true)]
+        [string]$AzureBlobStorageCacheAccountKey
+        ,
+        [Parameter(Mandatory = $true)]
+        [string]$AzureBlobStorageCacheContainerName
     )
 
     # Setup
@@ -39,6 +48,31 @@ function Invoke-PackageRestore
 
     $sitecoreDownloadUrl = "https://dev.sitecore.net"
     $destinationPath = $Destination.TrimEnd('\')
+
+    if ($AzureBlobStorageCacheAccountName -or $AzureBlobStorageCacheContainerName) {
+        if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountName)) {
+            Write-Error "AzureBlobStorageCacheAccountName is not specified"
+            exit -1;
+        }
+
+        if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheContainerName)) {
+            Write-Error "AzureBlobStorageCacheContainerName is not specified"
+            exit -1;
+        }
+
+        if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountKey)) {
+            Write-Error "AzureBlobStorageCacheAccountKey is not specified"
+            exit -1;
+        }
+
+        Push-Location $Destination
+        try {
+            npx sync-azure-blob --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
+        }
+        finally {
+            Pop-Location
+        }
+    }
 
     # Load packages
     $packages = Get-Packages
