@@ -26,7 +26,7 @@ param(
     [string[]]$SitecoreVersion = @("9.3.0"),
     [ValidateSet("xm", "xp")]
     [string[]]$Topology = @("xm", "xp"),
-    [ValidateSet("1909", "1903", "ltsc2019", "linux")]
+    [ValidateSet("1909", "1903", "ltsc2019")]
     [string[]]$OSVersion = @("ltsc2019"),
     [Parameter()]
     [switch]$IncludeSpe,
@@ -73,14 +73,6 @@ $windowsVersionMapping = @{
     "ltsc2019" = "1809"
 }
 
-filter LinuxFilter
-{
-    if ($_ -like "*-linux")
-    {
-        $_
-    }
-}
-
 filter WindowsFilter
 {
     param([string]$Version)
@@ -93,16 +85,13 @@ filter WindowsFilter
 filter SitecoreFilter
 {
     param([string]$Version)
-    if ($_ -like "*:$($Version)-windowsservercore-*" -or $_ -like "*:$($Version)-nanoserver-*" -or $_ -like "*:$($Version)-linux")
+    if ($_ -like "*:$($Version)-windowsservercore-*" -or $_ -like "*:$($Version)-nanoserver-*")
     {
         $_
     }
 }
 
 $rootFolder = "windows"
-if ($OSVersion -eq "linux") {
-    $rootFolder = "linux"
-}
 
 $availableSpecs = Get-BuildSpecifications -Path (Join-Path $PSScriptRoot $rootFolder)
 
@@ -150,19 +139,11 @@ foreach ($wv in $OSVersion)
         if ($Topology -contains "xm")
         {
             $xmTags | SitecoreFilter -Version $scv | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
-
-            if ($wv -eq "linux") {
-                $xmTags | SitecoreFilter -Version $scv | LinuxFilter | ForEach-Object { $tags.Add($_) > $null }
-            }
         }
 
         if ($Topology -contains "xp")
         {
             $xpTags | SitecoreFilter -Version $scv | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
-
-            if ($wv -eq "linux") {
-                $xpTags | SitecoreFilter -Version $scv | LinuxFilter | ForEach-Object { $tags.Add($_) > $null }
-            }
         }
 
         if ($IncludeSpe)
@@ -175,10 +156,6 @@ foreach ($wv in $OSVersion)
             if ($Topology -contains "xp")
             {
                 $xpSpeTags | SitecoreFilter -Version $scv | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
-
-                if ($wv -eq "linux") {
-                    $xpSpeTags | SitecoreFilter -Version $scv | LinuxFilter | ForEach-Object { $tags.Add($_) > $null }
-                }
             }
         }
 
@@ -192,11 +169,6 @@ foreach ($wv in $OSVersion)
             if ($Topology -contains "xp")
             {
                 $xpSxaTags | SitecoreFilter -Version $scv | WindowsFilter -Version $wv | ForEach-Object { $tags.Add($_) > $null }
-
-                if ($wv -eq "linux")
-                {
-                    $xpSxaTags | SitecoreFilter -Version $scv | LinuxFilter | ForEach-Object { $tags.Add($_) > $null }
-                }
             }
         }
 

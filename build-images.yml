@@ -4,7 +4,6 @@
 # - azure.subscription
 # - azure.agentPoolName
 # - azure.vm.resourceGroupName
-# - (optional) azure.vm.linux.name
 # - azure.vm.windows.name
 #
 # Image build options
@@ -35,11 +34,7 @@
 # Assets drive
 # - assets.useDrive
 # - (optional) assets.azure.fileshare.password
-# - (optional) assets.shared.folder.server
-#
-# Linux
-# - linux.buildImages
-# - (optional) linux.install.source.path
+# - (optional) $AzureSharedFolderServer
 
 trigger:
   batch: true
@@ -65,9 +60,7 @@ stages:
           name: $(azure.agentPoolName)
         steps:
           - powershell: |
-              Test-NetConnection -ComputerName "$(assets.shared.folder.server)" -Port 445
-              Invoke-Expression -Command "cmdkey /add:$(assets.shared.folder.server) /user:Azure\dockerassets /pass:$(assets.azure.fileshare.password)"
-              New-PSDrive -Name Z -PSProvider FileSystem -Root "\\$(assets.shared.folder.server)\docker-assets" -Persist -ErrorAction SilentlyContinue
+
             condition: eq(variables['assets.useDrive'], 'true')
             displayName: "Connect Asset Drive (optional)"
           - task: Docker@2
@@ -102,64 +95,3 @@ stages:
                 docker image prune --force
             condition: and(succeeded(), eq(variables['build.pruneImages'], 'true'))
             displayName: 'Prune images (optional)'
-
-      - job: Build_Linux_Images
-        timeoutInMinutes: 720
-        displayName: "Build Linux Images"
-        condition: eq(variables['build.linuxImages'], 'true')
-        pool:
-          vmImage: 'ubuntu-18.04'
-        steps:
-          - task: Bash@3
-            condition: eq(variables['assets.useDrive'], 'true')
-            inputs:
-                targetType: inline
-                script: |
-                  if [ -d "$(linux.install.source.path)" ]; then
-                  exit 0
-                  fi
-                  sudo mkdir $(linux.install.source.path)
-
-                  if [ ! -d "/etc/smbcredentials" ]; then
-                  sudo mkdir /etc/smbcredentials
-                  fi
-                  if [ ! -f "/etc/smbcredentials/dockerassets.cred" ]; then
-                      sudo bash -c 'echo "username=dockerassets" >> /etc/smbcredentials/dockerassets.cred'
-                      sudo bash -c 'echo "password=$(assets.azure.fileshare.password)" >> /etc/smbcredentials/dockerassets.cred'
-                  fi
-                  sudo chmod 600 /etc/smbcredentials/dockerassets.cred
-
-                  sudo bash -c 'echo "//$(assets.shared.folder.server)/docker-assets $(linux.install.source.path) cifs nofail,vers=3.0,credentials=/etc/smbcredentials/dockerassets.cred,dir_mode=0777,file_mode=0777,serverino" >> /etc/fstab'
-                  sudo mount -t cifs //$(assets.shared.folder.server)/docker-assets $(linux.install.source.path) -o vers=3.0,credentials=/etc/smbcredentials/dockerassets.cred,dir_mode=0777,file_mode=0777,serverino
-          - task: Docker@2
-            enabled: true
-            displayName: "Docker registry login"
-            inputs:
-                containerRegistry: "docker-registry"
-                command: login
-          - checkout: self
-            clean: true
-          - powershell: |
-                "$(container.registry.password)" | docker login -u "$(container.registry.username)" --password-stdin $(container.registry.fullname)
-                $buildProps = @{
-                  InstallSourcePath = "$(linux.install.source.path)"
-                  SitecoreUsername = "$(sitecore.username)"
-                  SitecorePassword = "$(sitecore.password)"
-                  Registry = "$(container.registry.fullname)"
-                  RegistryUserName = "$(container.registry.username)"
-                  RegistryPassword = "$(container.registry.password)"
-                  SitecoreVersion = "$(build.sitecoreVersion)"
-                  Topology = $(build.sitecoreTopology)
-                  OSVersion = "linux"
-                  IncludeSpe = [System.Convert]::ToBoolean($(build.includeSpe))
-                  IncludeSxa = [System.Convert]::ToBoolean($(build.includeSxa))
-                  IncludeJss = [System.Convert]::ToBoolean($(build.includeJss))
-                  IncludeExperimental = [System.Convert]::ToBoolean($(build.includeExperimentalImages))
-                  SkipExistingImage = [System.Convert]::ToBoolean($(build.skipExistingImages))
-                }
-
-                .\Build.ps1 @buildProps
-            displayName: "Build Linux Images"
-          - powershell: |
-                docker image prune --force
-            condition: and(succeeded(), eq(variables['build.pruneImages'], 'true'))

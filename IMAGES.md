@@ -3,7 +3,6 @@
 ## Index
 
 - [Windows images](#current-windows-images)
-- [Linux images](#current-linux.images)
 
 > Deprecated tags are marked with ~~strike through~~ and they are not built by default.
 
@@ -378,30 +377,3 @@
 | 2017 | mssql-developer | windowsservercore | 1903 | `mssql-developer:2017-windowsservercore-1903` [Dockerfile](windows/dependencies/mssql-developer-2017/Dockerfile) |
 
 [//]: # "end: current windows"
-
-## Current linux images
-
-[//]: # "start: current linux"
-
-| Version | Repository | OS  | Build      | Tag |
-| ------- | ---------- | --- | -----------| --- |
-| 9.3.0 | sitecore-xp-sxa-sql | linux |  | `sitecore-xp-sxa-sql:9.3.0-linux` [Dockerfile](linux/9.3.x/sitecore-sxa-sql/Dockerfile) |
-| 9.3.0 | sitecore-xp-sql | linux |  | `sitecore-xp-sql:9.3.0-linux` [Dockerfile](linux/9.3.x/sitecore-xp-sql/Dockerfile) |
-| 9.3.0 | sitecore-xp-spe-sql | linux |  | `sitecore-xp-spe-sql:9.3.0-linux` [Dockerfile](linux/9.3.x/sitecore-spe-sql/Dockerfile) |
-| 9.3.0 | sitecore-xp-solr | linux |  | `sitecore-xp-solr:9.3.0-linux` [Dockerfile](linux/9.3.x/sitecore-xp-solr/Dockerfile) |
-| 9.3.0 | sitecore-xm-sql | linux |  | `sitecore-xm-sql:9.3.0-linux` [Dockerfile](linux/9.3.x/sitecore-xm-sql/Dockerfile) |
-| 9.3.0 | sitecore-xm-solr | linux |  | `sitecore-xm-solr:9.3.0-linux` [Dockerfile](linux/9.3.x/sitecore-xm-solr/Dockerfile) |
-| 9.2.0 | sitecore-xp-sxa-sql | linux |  | `sitecore-xp-sxa-sql:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xp-sxa-sql/Dockerfile) |
-| 9.2.0 | sitecore-xp-sxa-solr | linux |  | `sitecore-xp-sxa-solr:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xp-solr/Dockerfile) |
-| 9.2.0 | sitecore-xp-sql | linux |  | `sitecore-xp-sql:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xp-sql/Dockerfile) |
-| 9.2.0 | sitecore-xp-spe-sql | linux |  | `sitecore-xp-spe-sql:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xp-spe-sql/Dockerfile) |
-| 9.2.0 | sitecore-xp-solr | linux |  | `sitecore-xp-solr:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xp-solr/Dockerfile) |
-| 9.2.0 | sitecore-xp-jss-sql | linux |  | `sitecore-xp-jss-sql:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xp-jss-sql/Dockerfile) |
-| 9.2.0 | sitecore-xm-sxa-sql | linux |  | `sitecore-xm-sxa-sql:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xm-sxa-sql/Dockerfile) |
-| 9.2.0 | sitecore-xm-sxa-solr | linux |  | `sitecore-xm-sxa-solr:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xm-solr/Dockerfile) |
-| 9.2.0 | sitecore-xm-sql | linux |  | `sitecore-xm-sql:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xm-sql/Dockerfile) |
-| 9.2.0 | sitecore-xm-spe-sql | linux |  | `sitecore-xm-spe-sql:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xm-spe-sql/Dockerfile) |
-| 9.2.0 | sitecore-xm-solr | linux |  | `sitecore-xm-solr:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xm-solr/Dockerfile) |
-| 9.2.0 | sitecore-xm-jss-sql | linux |  | `sitecore-xm-jss-sql:9.2.0-linux` [Dockerfile](linux/9.2.0/sitecore-xm-jss-sql/Dockerfile) |
-
-[//]: # "end: current linux"

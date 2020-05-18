@@ -98,7 +98,6 @@ Example:
 
 ```PowerShell
 
-# required, change if you need to build images in other folders such as ".\linux" or ".\legacy"
 $imagesPath = (Join-Path $PSScriptRoot "\windows")
 
 # optional, default value is ".\packages". Can be on local machine or a file share.
