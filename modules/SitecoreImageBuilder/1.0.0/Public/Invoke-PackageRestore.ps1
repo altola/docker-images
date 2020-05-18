@@ -49,6 +49,15 @@ function Invoke-PackageRestore
     $sitecoreDownloadUrl = "https://dev.sitecore.net"
     $destinationPath = $Destination.TrimEnd('\')
 
+    # Load packages
+    $packages = Get-Packages
+
+    # Ensure destination exists
+    if (!(Test-Path $destinationPath -PathType "Container"))
+    {
+        New-Item $destinationPath -ItemType Directory -WhatIf:$false | Out-Null
+    }
+
     if ($AzureBlobStorageCacheAccountName -or $AzureBlobStorageCacheContainerName -or $AzureBlobStorageCacheAccountKey) {
         if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountName)) {
             Write-Error "AzureBlobStorageCacheAccountName is not specified"
@@ -67,22 +76,13 @@ function Invoke-PackageRestore
 
         Push-Location $Destination
         try {
-            Write-Host "Syncing folder with azure blob storage, folder: $Destination"
+            Write-Host "Syncing folder with azure blob storage before we start downloading anything, folder: $Destination"
             Write-Host "npx sync-azure-blob --container `"$AzureBlobStorageCacheContainerName`" --account-name `"$AzureBlobStorageCacheAccountName`" --account-key `"$AzureBlobStorageCacheAccountKey`""
             npx sync-azure-blob --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
         }
         finally {
             Pop-Location
         }
-    }
-
-    # Load packages
-    $packages = Get-Packages
-
-    # Ensure destination exists
-    if (!(Test-Path $destinationPath -PathType "Container"))
-    {
-        New-Item $destinationPath -ItemType Directory -WhatIf:$false | Out-Null
     }
 
     $sitecoreDownloadSession = $null
@@ -97,6 +97,8 @@ function Invoke-PackageRestore
 
     $specs = Initialize-BuildSpecifications -Specifications $allSpecs -InstallSourcePath $Destination -Tags $Tags -ImplicitTagsBehavior "Include" -DeprecatedTagsBehavior $DeprecatedTagsBehavior -ExperimentalTagBehavior $ExperimentalTagBehavior
     $expected = $specs | Where-Object { $_.Include -and $_.Sources.Length -gt 0 } | Select-Object -ExpandProperty Sources -Unique
+
+    $downloadedAtLeastOneFile = $false
 
     # Check or download needed files
     $expected | ForEach-Object {
@@ -159,12 +161,45 @@ function Invoke-PackageRestore
 
                     # Download package using saved session
                     Invoke-FileDownload -Url $fileUrl -Path $filePath -Cookies $sitecoreDownloadSession.Cookies
+
+                    $downloadedAtLeastOneFile = $true;
                 }
                 else
                 {
                     # Download package
                     Invoke-FileDownload -Url $fileUrl -Path $filePath
+
+                    $downloadedAtLeastOneFile = $true;
                 }
+            }
+        }
+    }
+
+    if ($downloadedAtLeastOneFile) {
+        if ($AzureBlobStorageCacheAccountName -or $AzureBlobStorageCacheContainerName -or $AzureBlobStorageCacheAccountKey) {
+            if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountName)) {
+                Write-Error "AzureBlobStorageCacheAccountName is not specified"
+                exit -1;
+            }
+
+            if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheContainerName)) {
+                Write-Error "AzureBlobStorageCacheContainerName is not specified"
+                exit -1;
+            }
+
+            if ([string]::IsNullOrWhiteSpace($AzureBlobStorageCacheAccountKey)) {
+                Write-Error "AzureBlobStorageCacheAccountKey is not specified"
+                exit -1;
+            }
+
+            Push-Location $Destination
+            try {
+                Write-Host "Syncing folder with azure blob storage after extra files were downloaded, folder: $Destination"
+                Write-Host "npx sync-azure-blob --container `"$AzureBlobStorageCacheContainerName`" --account-name `"$AzureBlobStorageCacheAccountName`" --account-key `"$AzureBlobStorageCacheAccountKey`""
+                npx sync-azure-blob --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
+            }
+            finally {
+                Pop-Location
             }
         }
     }
