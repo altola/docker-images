@@ -5,9 +5,6 @@ function Get-BuildSpecifications
         [Parameter(Mandatory = $true)]
         [ValidateScript( { Test-Path $_ -PathType "Container" })]
         [string]$Path
-        ,
-        [Parameter(Mandatory = $false)]
-        [array]$AutoGenerateWindowsVersionTags = (Get-SupportedWindowsVersions)
     )
 
     # Disable strict mode checking when working with a dynamic JSON structure where some properties are optional
@@ -59,7 +56,7 @@ function Get-BuildSpecifications
 
             if ($tag.tag -like "*`${*}*")
             {
-                $AutoGenerateWindowsVersionTags | ForEach-Object {
+                (Get-SupportedWindowsVersions) | ForEach-Object {
                     $windowsServerCoreVersion = $_
                     $nanoServerVersion = $versionMap[$windowsServerCoreVersion]
 

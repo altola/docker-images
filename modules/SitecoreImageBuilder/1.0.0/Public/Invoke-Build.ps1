@@ -32,9 +32,6 @@ function Invoke-Build
         [array]$Tags
         ,
         [Parameter(Mandatory = $false)]
-        [array]$AutoGenerateWindowsVersionTags = (Get-SupportedWindowsVersions)
-        ,
-        [Parameter(Mandatory = $false)]
         [ValidateSet("Include", "Skip")]
         [string]$ImplicitTagsBehavior = "Include"
         ,
@@ -72,7 +69,7 @@ function Invoke-Build
     # Load packages
     $packages = Get-Packages
 
-    $allSpecs = Get-BuildSpecifications -Path $Path -AutoGenerateWindowsVersionTags $AutoGenerateWindowsVersionTags
+    $allSpecs = Get-BuildSpecifications -Path $Path
 
     if ($Tags -eq $null)
     {

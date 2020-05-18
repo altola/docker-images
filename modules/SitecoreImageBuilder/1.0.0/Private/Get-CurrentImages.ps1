@@ -5,14 +5,11 @@ function Get-CurrentImages
         [Parameter(Mandatory = $true)]
         [ValidateScript( { Test-Path $_ -PathType "Container" })]
         [string]$Path
-        ,
-        [Parameter(Mandatory = $false)]
-        [array]$AutoGenerateWindowsVersionTags = (Get-SupportedWindowsVersions)
     )
 
     $tagParser = [regex]"^(?<repository>[^:]*):(?<version>[^-]*)-(?<os>[^-]+)(?:-(?<build>.*))?$"
 
-    Get-BuildSpecifications -Path $Path -AutoGenerateWindowsVersionTags $AutoGenerateWindowsVersionTags | ForEach-Object {
+    Get-BuildSpecifications -Path $Path | ForEach-Object {
         $spec = $_
         $match = $tagParser.Match($spec.Tag)
 

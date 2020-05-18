@@ -15,9 +15,6 @@ function Invoke-PackageRestore
         [array]$Tags
         ,
         [Parameter(Mandatory = $false)]
-        [array]$AutoGenerateWindowsVersionTags = (Get-SupportedWindowsVersions)
-        ,
-        [Parameter(Mandatory = $false)]
         [ValidateSet("Include", "Skip")]
         [string]$DeprecatedTagsBehavior = "Skip"
         ,
@@ -55,7 +52,7 @@ function Invoke-PackageRestore
     $sitecoreDownloadSession = $null
 
     # Find out which files is needed
-    $allSpecs = Get-BuildSpecifications -Path $Path -AutoGenerateWindowsVersionTags $AutoGenerateWindowsVersionTags
+    $allSpecs = Get-BuildSpecifications -Path $Path
 
     if ($Tags -eq $null)
     {
