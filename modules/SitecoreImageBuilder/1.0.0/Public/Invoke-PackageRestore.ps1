@@ -196,7 +196,7 @@ function Invoke-PackageRestore
             try {
                 Write-Host "Syncing folder with azure blob storage after extra files were downloaded, folder: $Destination"
                 Write-Host "npx copy-azure-blob --container `"$AzureBlobStorageCacheContainerName`" --account-name `"$AzureBlobStorageCacheAccountName`" --account-key `"$AzureBlobStorageCacheAccountKey`""
-                npx sync-azure-blob --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
+                npx upload-azure-blob --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
             }
             finally {
                 Pop-Location
