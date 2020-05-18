@@ -28,6 +28,12 @@ function Invoke-Build
         [Parameter(Mandatory = $true)]
         [string]$Registry
         ,
+        [Parameter(Mandatory = $true)]
+        [string]$RegistryUserName
+        ,
+        [Parameter(Mandatory = $true)]
+        [string]$RegistryPassword
+        ,
         [Parameter(Mandatory = $false)]
         [array]$Tags
         ,
@@ -154,13 +160,15 @@ function Invoke-Build
 
             $buildOptions.Add("-t '$fulltag'")
 
+            $loginCommand = "az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword'"
             $buildCommand = "az acr build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
+            $command = "$loginCommand && $buildCommand"
 
-            Write-Message ("Invoking: {0} " -f $buildCommand) -Level Verbose -Verbose:$VerbosePreference
+            Write-Message ("Invoking: {0} " -f $command) -Level Verbose -Verbose:$VerbosePreference
 
-            & ([scriptblock]::create($buildCommand))
+            & ([scriptblock]::create($command))
 
-            $LASTEXITCODE -ne 0 | Where-Object { $_ } | ForEach-Object { throw "Failed: $buildCommand" }
+            $LASTEXITCODE -ne 0 | Where-Object { $_ } | ForEach-Object { throw "Failed: $command" }
 
             $currentWatch.Stop()
             Write-Message "Build completed for $($fulltag). Time: $($currentWatch.Elapsed.ToString("hh\:mm\:ss\.fff"))." -Level Debug

@@ -41,9 +41,6 @@ param(
     [switch]$IncludeExperimental
 )
 
-Write-Host "Azure CLI info:"
-az --version
-
 function Write-Message
 {
     param(
@@ -220,6 +217,8 @@ SitecoreImageBuilder\Invoke-Build `
     -Path (Join-Path $PSScriptRoot $rootFolder) `
     -InstallSourcePath $InstallSourcePath `
     -Registry $Registry `
+    -RegistryUserName $RegistryUserName `
+    -RegistryPassword $RegistryPassword `
     -Tags $tags `
     -ExperimentalTagBehavior:(@{$true = "Include"; $false = "Skip" }[$IncludeExperimental -eq $true]) `
     -WhatIf:$WhatIfPreference
