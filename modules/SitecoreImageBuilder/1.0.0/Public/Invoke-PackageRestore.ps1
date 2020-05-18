@@ -80,6 +80,10 @@ function Invoke-PackageRestore
             Write-Host "npx sync-azure-blob@0.0.12 --container `"$AzureBlobStorageCacheContainerName`" --account-name `"$AzureBlobStorageCacheAccountName`" --account-key `"$AzureBlobStorageCacheAccountKey`""
             npx sync-azure-blob@0.0.12 --container "$AzureBlobStorageCacheContainerName" --account-name "$AzureBlobStorageCacheAccountName" --account-key "$AzureBlobStorageCacheAccountKey"
         }
+        catch {
+            Write-Information "Uploading to azure blob thrown the exception. $($_ | ConvertTo-Json)"
+            $LASTEXITCODE = 0;
+        }
         finally {
             Pop-Location
         }
