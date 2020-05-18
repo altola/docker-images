@@ -12,10 +12,7 @@ param(
     [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [string]$SitecorePassword,
-    [Parameter(Mandatory = $true)]
-    [ValidateSet("WhenChanged", "Always", "Never")]
-    [string]$PushMode,
-    [Parameter()]
+    [Parameter(Mandatory=$True)]
     [string]$Registry = "",
     [Parameter()]
     [string]$RegistryUserName = "",
@@ -34,13 +31,8 @@ param(
     [switch]$IncludeSxa,
     [Parameter()]
     [switch]$IncludeJss,
-    [Parameter(HelpMessage = "If the docker image is already built it should be skipped.")]
-    [switch]$SkipExistingImage,
     [Parameter()]
-    [switch]$IncludeExperimental,
-    [Parameter(Mandatory = $false)]
-    [ValidateSet("ForceHyperV", "EngineDefault", "ForceProcess", "ForceDefault")]
-    [string]$IsolationModeBehaviour = "ForceHyperV"
+    [switch]$IncludeExperimental
 )
 
 function Write-Message
@@ -189,19 +181,6 @@ foreach ($wv in $OSVersion)
 
 $tags = [System.Collections.ArrayList]@($tags | Select-Object -Unique)
 
-if ($SkipExistingImage)
-{
-    Write-Message "Existing images will be excluded from the build."
-    $existingImages = docker images --format '{{.Repository}}:{{.Tag}}' --filter 'dangling=false'
-    foreach ($existingImage in $existingImages)
-    {
-        if ($tags -contains $existingImage)
-        {
-            $tags.Remove($existingImage)
-        }
-    }
-}
-
 if ($tags)
 {
     Write-Message "The following images will be built:"
@@ -212,6 +191,7 @@ else
     Write-Message "No images need to be built."
     exit
 }
+
 
 # restore any missing packages
 SitecoreImageBuilder\Invoke-PackageRestore `
@@ -230,6 +210,4 @@ SitecoreImageBuilder\Invoke-Build `
     -Registry $Registry `
     -Tags $tags `
     -ExperimentalTagBehavior:(@{$true = "Include"; $false = "Skip" }[$IncludeExperimental -eq $true]) `
-    -IsolationModeBehaviour $IsolationModeBehaviour `
-    -PushMode $PushMode
     -WhatIf:$WhatIfPreference

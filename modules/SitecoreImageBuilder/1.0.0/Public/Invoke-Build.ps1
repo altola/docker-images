@@ -25,7 +25,7 @@ function Invoke-Build
         [ValidateScript( { Test-Path $_ -PathType "Container" })]
         [string]$InstallSourcePath
         ,
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [string]$Registry
         ,
         [Parameter(Mandatory = $false)]
@@ -44,19 +44,11 @@ function Invoke-Build
         [string]$ExperimentalTagBehavior = "Skip"
         ,
         [Parameter(Mandatory = $false)]
-        [ValidateSet("WhenChanged", "Always", "Never")]
-        [string]$PushMode = "WhenChanged"
-        ,
-        [Parameter(Mandatory = $false)]
         [ValidateSet("Always", "Never")]
         [string]$PullMode = "Always"
         ,
         [Parameter(Mandatory = $false)]
         [switch]$SkipHashValidation
-        ,
-        [Parameter(Mandatory = $false)]
-        [ValidateSet("ForceHyperV", "EngineDefault", "ForceProcess", "ForceDefault")]
-        [string]$IsolationModeBehaviour = "ForceHyperV"
     )
 
     # Setup
@@ -84,41 +76,6 @@ function Invoke-Build
 
     Write-Message "Build specifications loaded..." -Level Info
 
-    # Pull latest external images
-    if ($PSCmdlet.ShouldProcess("Pull latest images"))
-    {
-        if ($PullMode -eq "Always")
-        {
-            $baseImages = @()
-
-            # Find external base images of included specifications
-            $specs | Where-Object { $_.Include -eq $true } | ForEach-Object {
-                $spec = $_
-
-                $spec.Base | Where-Object { $_.Contains("/") -eq $true } | ForEach-Object {
-                    $baseImages += $_
-                }
-            }
-
-            # Pull images
-            $baseImages | Select-Object -Unique | ForEach-Object {
-                $tag = $_
-
-                docker image pull $tag
-
-                $LASTEXITCODE -ne 0 | Where-Object { $_ } | ForEach-Object { throw "Failed." }
-
-                Write-Message ("External image '{0}' is latest." -f $tag) -Level Debug
-            }
-
-            Write-Message "External images are up to date..." -Level Debug
-        }
-        else
-        {
-            Write-Message ("Pulling external images skipped since PullMode was '{0}'." -f $PullMode) -Level Warning
-        }
-    }
-
     # Start build...
     if ($PSCmdlet.ShouldProcess("Start image builds"))
     {
@@ -126,19 +83,11 @@ function Invoke-Build
         $totalCount = $specs | Where-Object { $_.Include } | Measure-Object | Select-Object -ExpandProperty Count
         $specs | Where-Object { $_.Include } | ForEach-Object {
             $spec = $_
-            $tag = $spec.Tag
+            $fulltag = "{0}/{1}" -f $Registry, $spec.Tag
             $currentCount++
-            Write-Message "Processing $($currentCount) of $($totalCount) '$($tag)'..."
+            Write-Message "Processing $($currentCount) of $($totalCount) '$($fulltag)'..."
 
             $currentWatch = [System.Diagnostics.StopWatch]::StartNew()
-
-            # Save the digest of previous builds for later comparison
-            $previousDigest = $null
-
-            if ((docker image ls $tag --quiet))
-            {
-                $previousDigest = (docker image inspect $tag) | ConvertFrom-Json | ForEach-Object { $_.Id }
-            }
 
             # Copy any missing source files into build context
             $spec.Sources | ForEach-Object {
@@ -201,13 +150,11 @@ function Invoke-Build
                 $buildOptions.Add($option)
             }
 
-            # Workaround for docker "curl: (6) Could not resolve host: go.microsoft.com"
-            # manually define Hyper-V virtual switch even though it is meant to be default
-            $buildOptions.Add("--network='Default Switch'");
+            $buildOptions.Add("--registry '$Registry'")
 
-            $buildOptions.Add("--tag '$tag'")
+            $buildOptions.Add("-t '$fulltag'")
 
-            $buildCommand = "docker image build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
+            $buildCommand = "az acr build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
 
             Write-Message ("Invoking: {0} " -f $buildCommand) -Level Verbose -Verbose:$VerbosePreference
 
@@ -216,53 +163,8 @@ function Invoke-Build
             $LASTEXITCODE -ne 0 | Where-Object { $_ } | ForEach-Object { throw "Failed: $buildCommand" }
 
             $currentWatch.Stop()
-            Write-Message "Build completed for $($tag). Time: $($currentWatch.Elapsed.ToString("hh\:mm\:ss\.fff"))." -Level Debug
-            $reportRecords.Add(([ReportRecord]::new($tag, $currentWatch.Elapsed.ToString("hh\:mm\:ss\.fff"), $currentCount))) > $null
-
-            # Check to see if we need to stop here...
-            if ([string]::IsNullOrEmpty($Registry))
-            {
-                Write-Message ("Done with '{0}', but not pushed since 'Registry' was empty." -f $tag) -Level Debug
-
-                return
-            }
-
-            # Tag image
-            if ([string]::IsNullOrEmpty($Registry))
-            {
-                $fulltag = $tag
-            }
-            else
-            {
-                $fulltag = "{0}/{1}" -f $Registry, $tag
-            }
-
-            docker image tag $tag $fulltag
-
-            $LASTEXITCODE -ne 0 | Where-Object { $_ } | ForEach-Object { throw "Failed." }
-
-            # Check to see if we need to stop here...
-            if ($PushMode -eq "Never")
-            {
-                Write-Message ("Processing complete for '{0}', but not pushed since 'PushMode' is '{1}'." -f $tag, $PushMode)
-
-                return
-            }
-
-            # Determine if we need to push
-            $currentDigest = (docker image inspect $tag) | ConvertFrom-Json | ForEach-Object { $_.Id }
-
-            if (($PushMode -eq "WhenChanged") -and ($currentDigest -eq $previousDigest))
-            {
-                Write-Message ("Processing complete for '{0}', but not pushed since 'PushMode' is '{1}' and the image has not changed since last build." -f $tag, $PushMode)
-
-                return
-            }
-
-            # Push image
-            docker image push $fulltag
-
-            $LASTEXITCODE -ne 0 | Where-Object { $_ } | ForEach-Object { throw "Failed." }
+            Write-Message "Build completed for $($fulltag). Time: $($currentWatch.Elapsed.ToString("hh\:mm\:ss\.fff"))." -Level Debug
+            $reportRecords.Add(([ReportRecord]::new($fulltag, $currentWatch.Elapsed.ToString("hh\:mm\:ss\.fff"), $currentCount))) > $null
 
             Write-Message ("Processing complete for '{0}', image pushed." -f $fulltag)
         }
