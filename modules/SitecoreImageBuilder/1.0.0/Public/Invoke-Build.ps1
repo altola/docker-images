@@ -160,17 +160,16 @@ function Invoke-Build
 
             $buildOptions.Add("-t '$fulltag'")
 
-            $loginCommand = "az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword'"
-            $buildCommand = "az acr build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
-            $command = "$loginCommand ; $buildCommand"
+            $command = "az acr build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
+
+            Write-Message "Invoking: az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword'"
+            az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword'
 
             Write-Message ("Invoking: {0} " -f $command) -Level Verbose -Verbose:$VerbosePreference
 
-            Invoke-Expression "$command" -ErrorVariable errorvar
-            $LASTEXITCODE = 0
+            Invoke-Expression "$command" -ErrorVariable errorvar -Verbose -Debug
 
-            Write-Warning "ErrorVartiable: $errorvar"
-
+            Write-Warning "ErrorVartiable: $errorvar, code: $LASTEXITCODE"
 
             $LASTEXITCODE -ne 0 | Where-Object { $_ } | ForEach-Object { throw "Failed: $command" }
 
