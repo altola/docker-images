@@ -28,12 +28,6 @@ function Invoke-Build
         [Parameter(Mandatory = $true)]
         [string]$Registry
         ,
-        [Parameter(Mandatory = $true)]
-        [string]$RegistryUserName
-        ,
-        [Parameter(Mandatory = $true)]
-        [string]$RegistryPassword
-        ,
         [Parameter(Mandatory = $false)]
         [array]$Tags
         ,
@@ -161,9 +155,6 @@ function Invoke-Build
             $buildOptions.Add("-t '$fulltag'")
 
             $command = "az acr build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
-
-            Write-Message "Invoking: az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword' --expose-token"
-            az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword' --expose-token
 
             Write-Message ("Invoking: {0} " -f $command) -Level Verbose -Verbose:$VerbosePreference
 
