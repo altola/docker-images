@@ -166,7 +166,11 @@ function Invoke-Build
 
             Write-Message ("Invoking: {0} " -f $command) -Level Verbose -Verbose:$VerbosePreference
 
-            & ([scriptblock]::create($command))
+            Invoke-Expression "$command" -ErrorVariable errorvar
+            $LASTEXITCODE = 0
+
+            Write-Warning "ErrorVartiable: $errorvar"
+
 
             $LASTEXITCODE -ne 0 | Where-Object { $_ } | ForEach-Object { throw "Failed: $command" }
 
