@@ -162,8 +162,8 @@ function Invoke-Build
 
             $command = "az acr build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
 
-            Write-Message "Invoking: az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword'"
-            az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword'
+            Write-Message "Invoking: az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword' --expose-token"
+            az acr login --name $registry --username '$RegistryUserName' --password '$RegistryPassword' --expose-token
 
             Write-Message ("Invoking: {0} " -f $command) -Level Verbose -Verbose:$VerbosePreference
 
