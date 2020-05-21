@@ -75,7 +75,7 @@ function Invoke-PackageRestore
 
     # Check or download needed files
     $expected | ForEach-Object {
-        $filePath = $_.Replace(" ", "__").Replace("(", "__").Replace(")", "__")
+        $filePath = $_
 
         if (Test-Path $filePath -PathType Leaf)
         {
