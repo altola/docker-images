@@ -75,7 +75,7 @@ function Invoke-PackageRestore
 
     # Check or download needed files
     $expected | ForEach-Object {
-        $filePath = $_
+        $filePath = $_.Replace(" ", "__").Replace("(", "__").Replace(")", "__")
 
         if (Test-Path $filePath -PathType Leaf)
         {
@@ -91,7 +91,7 @@ function Invoke-PackageRestore
             Remove-Item -Path $filePath -Force
         }
 
-        $fileName = $filePath.Replace(("{0}\" -f $destinationPath), "").Replace(" ", "__");
+        $fileName = $filePath.Replace(("{0}\" -f $destinationPath), "")
         $package = $packages.$fileName
 
         if ($null -eq $package)
