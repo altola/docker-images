@@ -154,12 +154,6 @@ function Get-BuildSpecifications
                 throw ("Parse error, no base images was found in Dockerfile '{0}'." -f $dockerFile.FullName)
             }
 
-            Write-Host "Passing BuildOptions as follows"
-
-            @($options) | ForEach-Object {
-                Write-Host "$_"
-            }
-
             Write-Output (New-Object PSObject -Property @{
                     Tag            = $tag.tag;
                     BuildOptions   = @($options);
