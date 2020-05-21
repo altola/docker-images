@@ -149,7 +149,7 @@ function Invoke-Build
 
                 $index = $option.IndexOf('=')
                 if ($index -gt -1) {
-                    $buildOptions.Add($option.Substring(0, $index) + "=" + $option.Replace(" ", "__").Replace("(", "").Replace(")", "__"))
+                    $buildOptions.Add($option.Substring(0, $index) + "=" + $option.Substring($index).Replace(" ", "__").Replace("(", "").Replace(")", "__"))
                 } else {
                     $buildOptions.Add($option)
                 }
