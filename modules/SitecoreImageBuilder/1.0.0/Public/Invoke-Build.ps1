@@ -147,7 +147,12 @@ function Invoke-Build
             $spec.BuildOptions | ForEach-Object {
                 $option = $_
 
-                $buildOptions.Add($option)
+                $index = $option.IndexOf('=')
+                if ($index -gt -1) {
+                    $buildOptions.Add($option.Substring(0, $index) + "='"+ $option.Substring($index+1).Trim("'") + "'")
+                } else {
+                    $buildOptions.Add($option)
+                }
             }
 
             $buildOptions.Add("--registry '$Registry'")
