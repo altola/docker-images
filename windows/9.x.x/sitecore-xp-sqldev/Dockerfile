@@ -10,8 +10,8 @@ ARG ASSETS_USE_WDP_XCONNECT
 
 ENV ACCEPT_EULA='Y' `
     sa_password='HASH-epsom-sunset-cost7!' `
-    INSTALL_PATH=\"C:\\install\\' `
-    DATA_PATH=\"C:\\data\\' `
+    INSTALL_PATH='C:\\install\\' `
+    DATA_PATH='C:\\data\\' `
     SQL_HOSTNAME='sql'
 
 COPY --from=assets ["${ASSETS_USE_WDP}", "${INSTALL_PATH}"]

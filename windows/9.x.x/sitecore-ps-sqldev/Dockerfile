@@ -7,10 +7,10 @@ FROM $BASE_IMAGE as build
 
 ARG ASSETS_USE_WDP
 
-ENV INSTALL_PATH=\"C:\\install\\' `
-    INSTALL_MODULE_PATH=\"C:\\install-module\\' `
-    DATA_PATH=\"C:\\data\\' `
-    TEMP_PATH=\"C:\\temp'
+ENV INSTALL_PATH='C:\\install\\' `
+    INSTALL_MODULE_PATH='C:\\install-module\\' `
+    DATA_PATH='C:\\data\\' `
+    TEMP_PATH='c:\\temp'
 
 COPY --from=assets ["${ASSETS_USE_WDP}", "${INSTALL_MODULE_PATH}"]
 COPY . ${INSTALL_MODULE_PATH}

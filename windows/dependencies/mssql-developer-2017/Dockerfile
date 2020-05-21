@@ -6,7 +6,7 @@ FROM $BASE_IMAGE
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 ENV sa_password='_' `
-    sa_password_path=\"C:\ProgramData\Docker\secrets\sa-password' `
+    sa_password_path='C:\ProgramData\Docker\secrets\sa-password' `
     attach_dbs='[]' `
     ACCEPT_EULA='_'
 
