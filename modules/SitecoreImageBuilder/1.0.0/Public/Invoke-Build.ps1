@@ -107,7 +107,7 @@ function Invoke-Build
                 # Copy if target doesn't exist. Legacy support: Always copy if the source is license.xml.
                 if (!(Test-Path -Path $targetPath) -or ($sourceItem.Name -eq "license.xml"))
                 {
-                    Copy-Item $sourceItem -Destination $targetPath -Verbose:$VerbosePreference
+                    Copy-Item $sourceItem -Destination $targetPath.Replace(" ", "__").Replace("(", "").Replace(")", "__") -Verbose:$VerbosePreference
                 }
 
                 # Check to see if we can lookup the hash of the source filename in sitecore-packages.json
@@ -149,7 +149,7 @@ function Invoke-Build
 
                 $index = $option.IndexOf('=')
                 if ($index -gt -1) {
-                    $buildOptions.Add($option.Substring(0, $index) + "='"+ $option.Substring($index+1).Trim("'") + "'")
+                    $buildOptions.Add($option.Substring(0, $index) + "=" + $option.Replace(" ", "__").Replace("(", "").Replace(")", "__"))
                 } else {
                     $buildOptions.Add($option)
                 }
