@@ -84,8 +84,21 @@ function Invoke-Build
         $specs | Where-Object { $_.Include } | ForEach-Object {
             $spec = $_
             $fulltag = "{0}/{1}" -f $Registry, $spec.Tag
+
             $currentCount++
             Write-Message "Processing $($currentCount) of $($totalCount) '$($fulltag)'..."
+
+            $Repository = $spec.Tag.Split(':')[0];
+            $existingRepositories = az acr repository list --name $Registry | ConvertFrom-Json
+            if ($existingRepositories.Contains($Repository))
+            {
+                $existingTags = az acr repository show-tags --name $Registry --repository $Repository | ConvertFrom-Json
+                if ($existingTags.Contains($spec.Tag.Split(':')[1]))
+                {
+                    Write-Message "Already exists in Azure CR. Skipping..."
+                    return;
+                }
+            }
 
             $currentWatch = [System.Diagnostics.StopWatch]::StartNew()
 
