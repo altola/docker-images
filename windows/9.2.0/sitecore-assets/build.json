@@ -9,17 +9,17 @@
     }
   ],
   "sources": [
-    "Sitecore 9.2.0 rev. 002893 (WDP XM1 packages).zip",
-    "Sitecore 9.2.0 rev. 002893 (WDP XP0 packages).zip",
-    "Sitecore 9.2.0 rev. 002893 (WDP XP1 packages).zip",
-    "Sitecore Experience Accelerator 1.9.0 rev. 190528 for 9.2 CD.scwdp.zip",
-    "Sitecore Experience Accelerator 1.9.0 rev. 190528 for 9.2.scwdp.zip",
-    "Sitecore Experience Accelerator XM 1.9.0 rev. 190528 for 9.2 CD.scwdp.zip",
-    "Sitecore Experience Accelerator XM 1.9.0 rev. 190528 for 9.2.scwdp.zip",
-    "Sitecore JavaScript Services Server for Sitecore 9.2 XM 12.0.0 rev. 190522 CD.scwdp.zip",
-    "Sitecore JavaScript Services Server for Sitecore 9.2 XM 12.0.0 rev. 190522.scwdp.zip",
-    "Sitecore JavaScript Services Server for Sitecore 9.2 XP 12.0.0 rev. 190522 CD.scwdp.zip",
-    "Sitecore JavaScript Services Server for Sitecore 9.2 XP 12.0.0 rev. 190522.scwdp.zip",
+    "Sitecore 9.2.0__rev__002893 (WDP XM1 packages).zip",
+    "Sitecore 9.2.0__rev__002893 (WDP XP0 packages).zip",
+    "Sitecore 9.2.0__rev__002893 (WDP XP1 packages).zip",
+    "Sitecore Experience Accelerator 1.9.0__rev__190528 for 9.2 CD.scwdp.zip",
+    "Sitecore Experience Accelerator 1.9.0__rev__190528 for 9.2.scwdp.zip",
+    "Sitecore Experience Accelerator XM 1.9.0__rev__190528 for 9.2 CD.scwdp.zip",
+    "Sitecore Experience Accelerator XM 1.9.0__rev__190528 for 9.2.scwdp.zip",
+    "Sitecore JavaScript Services Server for Sitecore 9.2 XM 12.0.0__rev__190522 CD.scwdp.zip",
+    "Sitecore JavaScript Services Server for Sitecore 9.2 XM 12.0.0__rev__190522.scwdp.zip",
+    "Sitecore JavaScript Services Server for Sitecore 9.2 XP 12.0.0__rev__190522 CD.scwdp.zip",
+    "Sitecore JavaScript Services Server for Sitecore 9.2 XP 12.0.0__rev__190522.scwdp.zip",
     "Sitecore.PowerShell.Extensions-6.0.scwdp.zip"
   ]
 }
