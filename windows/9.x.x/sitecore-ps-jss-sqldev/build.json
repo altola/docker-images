@@ -4,7 +4,7 @@
       "tag": "sitecore-xm-ps-jss-sqldev:9.3.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
         "--build-arg BASE_IMAGE=sitecore-xm-ps-sqldev:9.3.0-windowsservercore-${windowsservercore_version}",
-        "--build-arg ASSETS_IMAGE=sitecore-assets:9.3.0-nanoserver-${nanoserver_version}",
+        "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.3.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore JavaScript Services Server for Sitecore 9.3 XM 13.0.0.scwdp.zip'"
       ],
       "experimental": true
@@ -13,7 +13,7 @@
       "tag": "sitecore-xp-ps-jss-sqldev:9.3.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
         "--build-arg BASE_IMAGE=sitecore-xp-ps-sqldev:9.3.0-windowsservercore-${windowsservercore_version}",
-        "--build-arg ASSETS_IMAGE=sitecore-assets:9.3.0-nanoserver-${nanoserver_version}",
+        "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.3.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore JavaScript Services Server for Sitecore 9.3 XP 13.0.0.scwdp.zip'"
       ],
       "experimental": true
@@ -22,7 +22,7 @@
       "tag": "sitecore-xm-ps-jss-sqldev:9.2.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
         "--build-arg BASE_IMAGE=sitecore-xm-ps-sqldev:9.2.0-windowsservercore-${windowsservercore_version}",
-        "--build-arg ASSETS_IMAGE=sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
+        "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore JavaScript Services Server for Sitecore 9.2 XM 12.0.0__rev__190522.scwdp.zip'"
       ],
       "experimental": true
@@ -31,7 +31,7 @@
       "tag": "sitecore-xp-ps-jss-sqldev:9.2.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
         "--build-arg BASE_IMAGE=sitecore-xp-ps-sqldev:9.2.0-windowsservercore-${windowsservercore_version}",
-        "--build-arg ASSETS_IMAGE=sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
+        "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore JavaScript Services Server for Sitecore 9.2 XP 12.0.0__rev__190522.scwdp.zip'"
       ],
       "experimental": true
