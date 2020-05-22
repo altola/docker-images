@@ -198,6 +198,7 @@ else
     exit
 }
 
+$tags = @("sitecore-assets:9.3.0-nanoserver-1809")
 
 # restore any missing packages
 SitecoreImageBuilder\Invoke-PackageRestore `
