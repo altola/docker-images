@@ -51,6 +51,8 @@ function Invoke-Build
         [switch]$SkipHashValidation
     )
 
+    $tags = @("sitecore-assets:9.3.0-nanoserver-1809")
+
     # Setup
     $ErrorActionPreference = "STOP"
     $ProgressPreference = "SilentlyContinue"
