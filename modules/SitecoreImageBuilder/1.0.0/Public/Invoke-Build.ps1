@@ -51,8 +51,6 @@ function Invoke-Build
         [switch]$SkipHashValidation
     )
 
-    $tags = @("sitecore-assets:9.3.0-nanoserver-1809")
-
     # Setup
     $ErrorActionPreference = "STOP"
     $ProgressPreference = "SilentlyContinue"
@@ -162,6 +160,16 @@ function Invoke-Build
             $spec.BuildOptions | ForEach-Object {
                 $option = $_
 
+                $index = $option.IndexOf('=');
+                if ($index -ge 0) {
+                    $key = $option.Substring(0, $index)
+                    $value = $option.Substring($index + 1)
+                    if ($value.StartsWith("C:")) {
+                        $option = $key + '=' + ($value -replace '[^:^\\^/^\.^\w^-]');
+                    }
+                }
+
+                Write-Host "Build Options: $option"
                 $buildOptions.Add($option)
             }
 
