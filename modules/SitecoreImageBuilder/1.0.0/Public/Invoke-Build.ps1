@@ -166,6 +166,8 @@ function Invoke-Build
                     $value = $option.Substring($index + 1)
                     if ($value.StartsWith("C:")) {
                         $option = $key + '=' + ($value -replace '[^:^\\^/^\.^\w^-]');
+                    } elseif ($value.StartsWith("'C:")) {
+                        $option = $key + '=''' + ($value -replace '[^:^\\^/^\.^\w^-]') + '''';
                     }
                 }
 
