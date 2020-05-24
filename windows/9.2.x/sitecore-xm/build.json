@@ -5,7 +5,7 @@
       "build-options": [
         "--build-arg BASE_IMAGE=mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
-        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore__9.2.0__rev__002893_xm_onprem__cm.scwdp.zip'",
+        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore 9.2.0 rev. 002893 (XM) (OnPrem)_cm.scwdp.zip'",
         "--build-arg SC_ROLE_CONFIG_DIRECTORY=\\config\\cm",
         "--build-arg SC_ROLE_DEFINE='ContentManagement, Indexing'"
       ]
@@ -15,7 +15,7 @@
       "build-options": [
         "--build-arg BASE_IMAGE=mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
-        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore__9.2.0__rev__002893_xm_onprem__cd.scwdp.zip'",
+        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore 9.2.0 rev. 002893 (XM) (OnPrem)_cd.scwdp.zip'",
         "--build-arg SC_ROLE_CONFIG_DIRECTORY=.\\config\\cd",
         "--build-arg SC_ROLE_DEFINE='ContentDelivery'"
       ]

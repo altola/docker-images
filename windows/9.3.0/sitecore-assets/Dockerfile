@@ -54,7 +54,6 @@ RUN New-Item -Path 'C:\\install\\setup' -ItemType 'Directory' -Force | Out-Null;
 # add tools folder
 COPY tools\\ C:\\install\\tools\\
 
-RUN echo debug_from $BASE_IMAGE
 FROM $BASE_IMAGE
 
 COPY --from=build ["C:\\install\\", "C:\\install\\"]
