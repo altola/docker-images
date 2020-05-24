@@ -163,11 +163,9 @@ function Invoke-Build
                 $index = $option.IndexOf('=');
                 if ($index -ge 0) {
                     $key = $option.Substring(0, $index)
-                    $value = $option.Substring($index + 1)
+                    $value = $option.Substring($index + 1) -replace '''', ''
                     if ($value.StartsWith("C:")) {
-                        $option = $key + '=' + ($value -replace '.rev\..(\d*)|(r[0-9]+.[0-9]+)|[^\.^\w^-]');
-                    } elseif ($value.StartsWith("'C:")) {
-                        $option = $key + '=''' + ($value -replace '.rev\..(\d*)|(r[0-9]+.[0-9]+)|[^\.^\w^-]') + '''';
+                        $option = $key + '=''' + ($value -replace '.rev\..(\d*)|(r[0-9]+.[0-9]+)|[^:^\\^/^\.^\w^-]') + '''';
                     }
                 }
 
