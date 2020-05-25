@@ -167,7 +167,7 @@ function Invoke-Build
                     $key = $option.Substring(0, $index)
                     $value = $option.Substring($index + 1) -replace '''', ''
                     if ($value.StartsWith("C:")) {
-                        $option = $key + '=''' + ($value -replace '.rev\..(\d*)|(r[0-9]+.[0-9]+)|[^:^\\^/^\.^\w^-]') + '''';
+                        $option = $key + '=''' + ($value -replace '[\s_.]*rev\.[\s_.]*(\d*)|([\s_.]*r[0-9]+[\s_.]*[0-9]+)|[^:^\\^/^\.^\w^-]') + '''';
                     }
                 }
 
