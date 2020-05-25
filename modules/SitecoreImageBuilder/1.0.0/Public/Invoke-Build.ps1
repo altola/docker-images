@@ -182,6 +182,8 @@ function Invoke-Build
 
             $buildOptions.Add("--platform 'windows'")
 
+            $buildOptions.Add("--timeout 36000")
+
             $command = "az acr build {0} '{1}'" -f ($buildOptions -join " "), $spec.Path
 
             Write-Message ("Invoking: {0} " -f $command) -Level Verbose -Verbose:$VerbosePreference
