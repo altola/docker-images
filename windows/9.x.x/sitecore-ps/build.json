@@ -3,7 +3,7 @@
     {
       "tag": "sitecore-xm-ps-cm:9.3.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
-        "--build-arg BASE_IMAGE=sitecore-xm-cm:9.3.0-windowsservercore-${windowsservercore_version}",
+        "--build-arg BASE_IMAGE=altola.azurecr.io/sitecore-xm-cm:9.3.0-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.3.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore__Publishing__Module 9.3.0.0.scwdp.zip'"
       ],
@@ -12,7 +12,7 @@
     {
       "tag": "sitecore-xm-ps-cd:9.3.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
-        "--build-arg BASE_IMAGE=sitecore-xm-cd:9.3.0-windowsservercore-${windowsservercore_version}",
+        "--build-arg BASE_IMAGE=altola.azurecr.io/sitecore-xm-cd:9.3.0-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.3.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore__Publishing__Module 9.3.0.0.scwdp.zip'"
       ],
@@ -21,7 +21,7 @@
     {
       "tag": "sitecore-xp-ps-standalone:9.3.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
-        "--build-arg BASE_IMAGE=sitecore-xp-standalone:9.3.0-windowsservercore-${windowsservercore_version}",
+        "--build-arg BASE_IMAGE=altola.azurecr.io/sitecore-xp-standalone:9.3.0-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.3.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore__Publishing__Module 9.3.0.0.scwdp.zip'"
       ],
@@ -30,7 +30,7 @@
     {
       "tag": "sitecore-xp-ps-cd:9.3.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
-        "--build-arg BASE_IMAGE=sitecore-xp-cd:9.3.0-windowsservercore-${windowsservercore_version}",
+        "--build-arg BASE_IMAGE=altola.azurecr.io/sitecore-xp-cd:9.3.0-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.3.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore__Publishing__Module 9.3.0.0.scwdp.zip'"
       ],

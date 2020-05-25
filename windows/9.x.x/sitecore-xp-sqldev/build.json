@@ -3,7 +3,7 @@
     {
       "tag": "sitecore-xp-sqldev:9.2.0-windowsservercore-${windowsservercore_version}",
       "build-options": [
-        "--build-arg BASE_IMAGE=mssql-developer:2017-windowsservercore-${windowsservercore_version}",
+        "--build-arg BASE_IMAGE=altola.azurecr.io/mssql-developer:2017-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore__9.2.0__rev__002893_onprem__single.scwdp.zip'",
         "--build-arg ASSETS_USE_WDP_XCONNECT='C:\\packages\\Sitecore__9.2.0__rev__002893_onprem__xp0xconnect.scwdp.zip'"
@@ -12,7 +12,7 @@
     {
       "tag": "sitecore-xp-sqldev:9.1.1-windowsservercore-${windowsservercore_version}",
       "build-options": [
-        "--build-arg BASE_IMAGE=mssql-developer:2017-windowsservercore-${windowsservercore_version}",
+        "--build-arg BASE_IMAGE=altola.azurecr.io/mssql-developer:2017-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=altola.azurecr.io/sitecore-assets:9.1.1-nanoserver-${nanoserver_version}",
         "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore__9.1.1__rev__002459_onprem__single.scwdp.zip'",
         "--build-arg ASSETS_USE_WDP_XCONNECT='C:\\packages\\Sitecore__9.1.1__rev__002459_onprem__xp0xconnect.scwdp.zip'"
