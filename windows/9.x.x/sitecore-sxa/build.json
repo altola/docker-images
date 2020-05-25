@@ -37,7 +37,7 @@
       "build-options": [
         "--build-arg BASE_IMAGE=sitecore-xm-spe-cm:9.2.0-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
-        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore Experience Accelerator XM 1.9.0__rev__190528 for 9.2.scwdp.zip'"
+        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore Experience Accelerator XM 1.9.0 rev. 190528 for 9.2.scwdp.zip'"
       ]
     },
     {
@@ -45,7 +45,7 @@
       "build-options": [
         "--build-arg BASE_IMAGE=sitecore-xm-cd:9.2.0-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
-        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore Experience Accelerator XM 1.9.0__rev__190528 for 9.2 CD.scwdp.zip'"
+        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore Experience Accelerator XM 1.9.0 rev. 190528 for 9.2 CD.scwdp.zip'"
       ]
     },
     {
@@ -53,7 +53,7 @@
       "build-options": [
         "--build-arg BASE_IMAGE=sitecore-xp-spe-standalone:9.2.0-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
-        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore Experience Accelerator 1.9.0__rev__190528 for 9.2.scwdp.zip'"
+        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore Experience Accelerator 1.9.0 rev. 190528 for 9.2.scwdp.zip'"
       ]
     },
     {
@@ -61,7 +61,7 @@
       "build-options": [
         "--build-arg BASE_IMAGE=sitecore-xp-cd:9.2.0-windowsservercore-${windowsservercore_version}",
         "--build-arg ASSETS_IMAGE=sitecore-assets:9.2.0-nanoserver-${nanoserver_version}",
-        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore Experience Accelerator 1.9.0__rev__190528 for 9.2 CD.scwdp.zip'"
+        "--build-arg ASSETS_USE_WDP='C:\\packages\\Sitecore Experience Accelerator 1.9.0 rev. 190528 for 9.2 CD.scwdp.zip'"
       ]
     }
   ],
