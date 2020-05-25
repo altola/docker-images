@@ -55,8 +55,6 @@ function Invoke-Build
     $ErrorActionPreference = "STOP"
     $ProgressPreference = "SilentlyContinue"
 
-    $tags = @("sitecore-assets:9.3.0-nanoserver-1809")
-
     $watch = [System.Diagnostics.StopWatch]::StartNew()
     $reportRecords = [System.Collections.Generic.List[ReportRecord]]@()
 
