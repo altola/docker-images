@@ -167,6 +167,8 @@ function Invoke-Build
                     if ($value.StartsWith("C:")) {
                         $option = $key + '=''' + ($value -replace '[\s_.]*rev\.[\s_.]*(\d*)|([\s_.]*r[0-9]+[\s_.]*[0-9]+)|[^:^\\^/^\.^\w^-]') + '''';
                     }
+
+                    $option = $option.Replace('BASE_IMAGE=sitecore', 'BASE_IMAGE=altola.azurecr.io/sitecore')
                 }
 
                 Write-Host "Build Options: $option"
