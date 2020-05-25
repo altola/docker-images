@@ -169,6 +169,7 @@ function Invoke-Build
                     }
 
                     $option = $option.Replace('_IMAGE=sitecore', '_IMAGE=altola.azurecr.io/sitecore')
+                    $option = $option.Replace('_IMAGE=mssql-developer', '_IMAGE=altola.azurecr.io/mssql-developer')
                 }
 
                 Write-Host "Build Options: $option"
