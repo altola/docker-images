@@ -21,7 +21,7 @@ COPY ${MANAGED_SCHEMA_XDB_NAME} C:\\temp\\
 
 RUN New-Item -Path 'C:\\clean' -ItemType Directory | Out-Null; `
     Copy-Item -Path 'C:\\solr\\server\\solr\\*' -Destination 'C:\\clean' -Force -Recurse; `
-    $env:CORE_NAMES -split ',' | ForEach-Object { `
+    $env:CORE_NAMES -split '__comma__' | ForEach-Object { `
         $name = $_.Trim(); `
         $schema = @{$true=('C:\\temp\\{0}' -f $env:MANAGED_SCHEMA_XDB_NAME);$false=('C:\\temp\\{0}' -f $env:MANAGED_SCHEMA_DEFAULT_NAME)}[$name -like '*xdb*']; `
         Copy-Item -Path 'C:\\clean\\configsets\\_default\\conf' -Destination ('C:\\clean\\{0}\\conf' -f $name) -Recurse -Force; `

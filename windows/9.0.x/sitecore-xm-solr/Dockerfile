@@ -18,7 +18,7 @@ COPY managed-schema.* C:\\temp\\
 
 RUN New-Item -Path 'C:\\clean' -ItemType Directory | Out-Null; `
     Copy-Item -Path 'C:\\solr\\server\\solr\\*' -Destination 'C:\\clean' -Force -Recurse; `
-    $env:CORE_NAMES -split ',' | ForEach-Object { `
+    $env:CORE_NAMES -split '__comma__' | ForEach-Object { `
         $name = $_.Trim(); `
         Copy-Item -Path 'C:\\clean\\configsets\\basic_configs\\conf' -Destination ('C:\\clean\\{0}\\conf' -f $name) -Recurse -Force; `
         Copy-Item -Path 'C:\\temp\\managed-schema.default' -Destination ('C:\\clean\\{0}\\conf\\managed-schema' -f $name); `

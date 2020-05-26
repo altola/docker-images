@@ -6,7 +6,7 @@
         "--build-arg BUILD_IMAGE=mcr.microsoft.com/windows/servercore:${windowsservercore_version}",
         "--build-arg BASE_IMAGE=sitecore-openjdk:8-nanoserver-${nanoserver_version}",
         "--build-arg SOLR_VERSION=6.6.3",
-        "--build-arg CORE_NAMES='sitecore_core_index, sitecore_master_index, sitecore_web_index, sitecore_marketingdefinitions_master, sitecore_marketingdefinitions_web, sitecore_marketing_asset_index_master, sitecore_marketing_asset_index_web, sitecore_testing_index, sitecore_suggested_test_index, sitecore_fxm_master_index, sitecore_fxm_web_index'"
+        "--build-arg CORE_NAMES='sitecore_core_index__comma__sitecore_master_index__comma__sitecore_web_index__comma__sitecore_marketingdefinitions_master__comma__sitecore_marketingdefinitions_web__comma__sitecore_marketing_asset_index_master__comma__sitecore_marketing_asset_index_web__comma__sitecore_testing_index__comma__sitecore_suggested_test_index__comma__sitecore_fxm_master_index__comma__sitecore_fxm_web_index'"
       ]
     }
   ],

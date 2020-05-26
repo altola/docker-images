@@ -6,7 +6,7 @@
         "--build-arg BUILD_IMAGE=mcr.microsoft.com/windows/servercore:${windowsservercore_version}",
         "--build-arg BASE_IMAGE=sitecore-openjdk:8-nanoserver-${nanoserver_version}",
         "--build-arg SOLR_VERSION=8.1.1",
-        "--build-arg CORE_NAMES='sitecore_core_index, sitecore_master_index, sitecore_web_index'",
+        "--build-arg CORE_NAMES='sitecore_core_index__comma__sitecore_master_index__comma__sitecore_web_index'",
         "--build-arg MANAGED_SCHEMA_DEFAULT_NAME='managed-schema.default.930'"
       ]
     },
@@ -16,7 +16,7 @@
         "--build-arg BUILD_IMAGE=mcr.microsoft.com/windows/servercore:${windowsservercore_version}",
         "--build-arg BASE_IMAGE=sitecore-openjdk:8-nanoserver-${nanoserver_version}",
         "--build-arg SOLR_VERSION=8.1.1",
-        "--build-arg CORE_NAMES='sitecore_core_index, sitecore_master_index, sitecore_web_index, sitecore_sxa_master_index, sitecore_sxa_web_index'",
+        "--build-arg CORE_NAMES='sitecore_core_index__comma__sitecore_master_index__comma__sitecore_web_index__comma__sitecore_sxa_master_index__comma__sitecore_sxa_web_index'",
         "--build-arg MANAGED_SCHEMA_DEFAULT_NAME='managed-schema.default.930'"
       ]
     },
@@ -26,7 +26,7 @@
         "--build-arg BUILD_IMAGE=mcr.microsoft.com/windows/servercore:${windowsservercore_version}",
         "--build-arg BASE_IMAGE=sitecore-openjdk:8-nanoserver-${nanoserver_version}",
         "--build-arg SOLR_VERSION=7.5.0",
-        "--build-arg CORE_NAMES='sitecore_core_index, sitecore_master_index, sitecore_web_index'",
+        "--build-arg CORE_NAMES='sitecore_core_index__comma__sitecore_master_index__comma__sitecore_web_index'",
         "--build-arg MANAGED_SCHEMA_DEFAULT_NAME='managed-schema.default.920'"
       ]
     },
@@ -36,7 +36,7 @@
         "--build-arg BUILD_IMAGE=mcr.microsoft.com/windows/servercore:${windowsservercore_version}",
         "--build-arg BASE_IMAGE=sitecore-openjdk:8-nanoserver-${nanoserver_version}",
         "--build-arg SOLR_VERSION=7.5.0",
-        "--build-arg CORE_NAMES='sitecore_core_index, sitecore_master_index, sitecore_web_index, sitecore_sxa_master_index, sitecore_sxa_web_index'",
+        "--build-arg CORE_NAMES='sitecore_core_index__comma__sitecore_master_index__comma__sitecore_web_index__comma__sitecore_sxa_master_index__comma__sitecore_sxa_web_index'",
         "--build-arg MANAGED_SCHEMA_DEFAULT_NAME='managed-schema.default.920'"
       ]
     },
@@ -46,7 +46,7 @@
         "--build-arg BUILD_IMAGE=mcr.microsoft.com/windows/servercore:${windowsservercore_version}",
         "--build-arg BASE_IMAGE=sitecore-openjdk:8-nanoserver-${nanoserver_version}",
         "--build-arg SOLR_VERSION=7.2.1",
-        "--build-arg CORE_NAMES='sitecore_core_index, sitecore_master_index, sitecore_web_index'",
+        "--build-arg CORE_NAMES='sitecore_core_index__comma__sitecore_master_index__comma__sitecore_web_index'",
         "--build-arg MANAGED_SCHEMA_DEFAULT_NAME='managed-schema.default.911'"
       ]
     }
